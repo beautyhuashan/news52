@@ -30,6 +30,8 @@
                 <label>
           <input type="checkbox">记住我
         </label>
+
+        
             </div>
             <button type="submit" class="btn btn-success btn-block">登录</button>
         </form>
@@ -39,6 +41,27 @@
     </div>
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script>
+        //1.点击发送按钮发送一个请求，获取元素
+        $('#signin_form').on('submit', function(e) {
+            //2.取消表单中的默认事件
+            e.preventDefault();
+            //3.获取表单中的数据
+            var formData = $(this).serialize();
+            console.log(formData);
+            //4.发送post请求
+            $.post('/signin', formData, function(data) {
+                //data是后台返回的数据
+                // console.log(data);
+                //根据后台返回的数据，实现页面的跳转
+                if(data.code == 200) {
+                    //如果code是200，表示登录成功，页面进行跳转到话题页
+                    location.href = '/';
+                }else {
+                    alert(data.message);
+                }
+            });
+        })
+        
     </script>
 </body>
 
